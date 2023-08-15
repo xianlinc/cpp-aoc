@@ -26,8 +26,33 @@ int parseLine(string line) {
   }
 
   int total = 0;
-  for (unordered_set<char>::iterator it = matches.cbegin();
-       it != matches.cend(); ++it) {
+  for (auto it = matches.cbegin(); it != matches.cend(); ++it) {
+    char c = *it;
+    total += convert(c);
+  }
+  return total;
+}
+
+int getBadge(string l1, string l2, string l3) {
+  unordered_set<char> myset1;
+  unordered_set<char> myset2;
+  unordered_set<char> matches;
+
+  for (int i = 0; i < l1.length(); i++) {
+    myset1.insert(l1[i]);
+  }
+  for (int i = 0; i < l2.length(); i++) {
+    myset2.insert(l2[i]);
+  }
+
+  for (int i = 0; i < l3.length(); i++) {
+    if (myset1.count(l3[i]) > 0 && myset2.count(l3[i]) > 0) {
+      matches.insert(l3[i]);
+    }
+  }
+
+  int total = 0;
+  for (auto it = matches.cbegin(); it != matches.cend(); ++it) {
     char c = *it;
     total += convert(c);
   }
@@ -55,8 +80,11 @@ int main(int argc, char *argv[]) {
   int numLines = i;
 
   int total = 0;
-  for (int j = 0; j < numLines; j++) {
-    total += parseLine(arr[j]);
+  // for (int j = 0; j < numLines; j++) {
+  //   total += parseLine(arr[j]);
+  // }
+  for (int j = 0; j < numLines - 2; j += 3) {
+    total += getBadge(arr[j], arr[j + 1], arr[j + 2]);
   }
   cout << "total: " << total << "\n";
 
