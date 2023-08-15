@@ -51,7 +51,6 @@ int getScore(Hand p1, Hand p2) {
   } else {
     total = 3;
   }
-  printf("%d\n", total);
 
   Outcome outcome = won(p1, p2);
   if (outcome == Win) {
@@ -93,6 +92,46 @@ Hand parsePlayer(char c) {
   }
 }
 
+Hand parsePlayerTwo(Hand opp, char c) {
+  Hand arr[3] = {Rock, Paper, Scissors};
+  Outcome o;
+  if (c == 'Z') {
+    o = Win;
+  } else if (c == 'Y') {
+    o = Draw;
+  } else {
+    o = Loss;
+  }
+
+  for (int i = 0; i < 3; i++) {
+    if (won(arr[i], opp) == o) {
+      return arr[i];
+    }
+  }
+
+  printf("Could not parse part 2 hand\n");
+  throw;
+}
+
+int part2(ifstream *f) {
+  char opp, player;
+  int score = 0;
+  Hand p1, p2;
+  string line;
+  while (getline(*f, line)) {
+    if (line == "") {
+      continue;
+    }
+    istringstream ss(line);
+    ss >> opp >> player;
+    p2 = parseOpp(opp);
+    p1 = parsePlayerTwo(p2, player);
+    score += getScore(p1, p2);
+  }
+  printf("score: %d\n", score);
+  return score;
+}
+
 int part1(ifstream *f) {
   char opp, player;
   int score = 0;
@@ -115,6 +154,6 @@ int part1(ifstream *f) {
 
 int main(int argc, char *argv[1]) {
   ifstream f(argv[1]);
-  part1(&f);
+  part2(&f);
   return 0;
 }

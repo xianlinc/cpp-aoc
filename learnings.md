@@ -5,3 +5,12 @@
 ## Exceptions
 - You can't panic() and expect a nice error message like in golang, thrown exceptions need to be handled
 - unhandled exceptions are pretty hard to read and unhelpful
+
+## Reading from Stdin
+- you can use `cin` 
+
+## Streams
+- read: `>>`
+- read until newline, and get rid of it `getline()`
+
+
